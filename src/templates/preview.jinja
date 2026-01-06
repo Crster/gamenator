@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <title>Game Preview: {{ gameid }}</title>
+  <link href="{{ url_for('static', path='/preview.css') }}" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r127/three.min.js"></script>
+</head>
+
+<body>
+  <div id="threejs-container">
+  </div>
+  <script src="{{ url_for('gamescript', gameid=gameid) }}"></script>
+</body>
+
+</html>
