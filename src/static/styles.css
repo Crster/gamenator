@@ -1,0 +1,30 @@
+body {
+  background-color: brown;
+}
+
+main.container {
+  width: 800px;
+  margin: 100px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem 3px;
+
+  iframe {
+    height: 600px;
+    border: 0px solid #FFF;
+  }
+}
+
+form.prompt {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+
+  input {
+    padding: 0.5rem 1rem;
+    width: 80%;
+  }
+  button {
+    width: 20%;
+  }
+}
