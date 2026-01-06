@@ -5,6 +5,10 @@ async function handleOnSubmit(event) {
   const inputPrompt = formData.get("prompt");
 
   try {
+    document.getElementById("ai-response").textContent = "";
+    document.querySelector("form.prompt > input").disabled = true;
+    document.querySelector("form.prompt > button").textContent = "Thinking...";
+
     const response = await fetch("/prompt", {
       method: "POST",
       headers: {
@@ -17,10 +21,14 @@ async function handleOnSubmit(event) {
       throw new Error(response.statusText);
     }
 
-    const data = await response.text();
-
-    console.log(data);
+    document.getElementById("ai-response").textContent = await response.text();
   } catch (error) {
     alert(`Error: ${error.message}`);
+  } finally {
+    Object.assign(document.querySelector("form.prompt > input"), {
+      disabled: false,
+      value: "",
+    });
+    document.querySelector("form.prompt > button").textContent = "Submit";
   }
 }

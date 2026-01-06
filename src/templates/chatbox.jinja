@@ -12,8 +12,12 @@
     </iframe>
 
     <form class="prompt" onsubmit="handleOnSubmit(event)">
-      <input type="text" name="prompt" placeholder="Describe your game?">
-      <button type="submit">Submit</button>
+      <section class="input-container">
+        <input type="text" name="prompt" placeholder="Describe your game?">
+        <button type="submit">Submit</button>
+      </section>
+
+      <code id="ai-response"></code>
     </form>
   </main>
 </body>

@@ -15,7 +15,7 @@ main.container {
   }
 }
 
-form.prompt {
+section.input-container {
   display: flex;
   flex-direction: row;
   gap: 5px;
