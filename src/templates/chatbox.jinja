@@ -11,14 +11,13 @@
     <iframe class="preview" src="{{ url_for('preview', gameid=gameid) }}">
     </iframe>
 
-    <form class="prompt" onsubmit="handleOnSubmit(event)">
-      <section class="input-container">
-        <input type="text" name="prompt" placeholder="Describe your game?">
-        <button type="submit">Submit</button>
-      </section>
+    <section class="input-container">
+      <input id="prompt-input" type="text" name="prompt" placeholder="Describe your game?">
+      <button id="prompt-prompt" onclick="handlePrompt()">Prompt</button>
+      <button id="prompt-query" onclick="handleQuery()">Query</button>
+    </section>
 
-      <code id="ai-response"></code>
-    </form>
+    <pre id="ai-response"></pre>
   </main>
 </body>
 
