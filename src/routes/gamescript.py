@@ -1,42 +1,34 @@
-import io
-from fastapi import APIRouter, Request
+from fastapi import APIRouter
 from fastapi.responses import StreamingResponse
+from libraries.postgre import postgre
 
 router = APIRouter(prefix="/gamescript", tags=["index"])
 
 
 @router.get("/{gameid}", response_class=StreamingResponse)
-async def gamescript(request: Request, gameid: str):
-    file_content_str = io.StringIO(
+async def gamescript(gameid: str):
+    game_code = postgre.fetch_all(
         """
-// Camera
-const fov = 45 // AKA Field of View
-const aspect = window.innerWidth / window.innerHeight
-const near = 0.1 // the near clipping plane
-const far = 100 // the far clipping plane
-const camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
-camera.position.set(0, 0, 10)
-
-// Renderer
-const renderer = new THREE.WebGLRenderer()
-renderer.setSize(window.innerWidth, window.innerHeight)
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-
-// Creating a sphere
-const geometry = new THREE.SphereGeometry(2.5, 32, 16)
-const material = new THREE.MeshBasicMaterial({ wireframe: false })
-const sphere = new THREE.Mesh(geometry, material)
-
-// Scene
-const scene = new THREE.Scene()
-scene.background = new THREE.Color('#00b140')
-scene.add(sphere)
-
-// Rendering the scene
-const container = document.querySelector('#threejs-container')
-container.append(renderer.domElement)
-renderer.render(scene, camera)
-"""
+        SELECT
+            content
+        FROM project
+        WHERE game_id = %s
+        ORDER BY
+            CASE section
+            WHEN 'helper' THEN 1
+            WHEN 'scene manager' THEN 2
+            WHEN 'object manager' THEN 3
+            WHEN 'factory' THEN 4
+            WHEN 'object event' THEN 5
+            WHEN 'backend event' THEN 6
+            WHEN 'window event' THEN 7
+            WHEN 'renderer' THEN 8
+            WHEN 'cleanup' THEN 9
+            ELSE 999
+            END ASC
+        """,
+        (gameid,),
     )
 
-    return StreamingResponse(file_content_str, media_type="text/javascript")
+    all_content = "\n".join([r["content"] for r in game_code])
+    return StreamingResponse(all_content, media_type="text/javascript")

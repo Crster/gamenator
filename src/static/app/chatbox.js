@@ -7,6 +7,11 @@ function getUserControl() {
   };
 }
 
+function refreshPreview() {
+  var iframe = document.getElementById("game-preview");
+  iframe.contentWindow.location.reload(true); // The 'true' argument forces a re-check from the server
+}
+
 async function handlePrompt() {
   const ctrl = getUserControl();
 
@@ -32,6 +37,7 @@ async function handlePrompt() {
     }
 
     ctrl.aiResponse.textContent = await response.text();
+    refreshPreview();
   } catch (error) {
     alert(`Error: ${error.message}`);
   } finally {
@@ -74,7 +80,15 @@ async function handleQuery() {
 
     const json = await response.json();
 
-    ctrl.aiResponse.textContent = JSON.stringify(json, null, 2)
+    let codePreview = "";
+    if (json.result) {
+      codePreview = json.result;
+      delete json.result;
+    }
+
+    ctrl.aiResponse.textContent = JSON.stringify(json, null, 2);
+    ctrl.aiResponse.textContent += "\n\n\n*** CODE BLOCK ***\n";
+    ctrl.aiResponse.textContent += codePreview;
   } catch (error) {
     alert(`Error: ${error.message}`);
   } finally {
