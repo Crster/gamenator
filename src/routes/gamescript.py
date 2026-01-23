@@ -16,14 +16,14 @@ async def gamescript(gameid: str):
         ORDER BY
             CASE section
             WHEN 'helper' THEN 1
-            WHEN 'scene manager' THEN 2
-            WHEN 'object manager' THEN 3
-            WHEN 'factory' THEN 4
-            WHEN 'object event' THEN 5
-            WHEN 'backend event' THEN 6
-            WHEN 'window event' THEN 7
-            WHEN 'renderer' THEN 8
-            WHEN 'cleanup' THEN 9
+            WHEN 'factory' THEN 2
+            WHEN 'scene manager' THEN 3
+            WHEN 'object manager' THEN 4
+            WHEN 'cleanup' THEN 5
+            WHEN 'object event' THEN 6
+            WHEN 'backend event' THEN 7
+            WHEN 'window event' THEN 8
+            WHEN 'renderer' THEN 9
             ELSE 999
             END ASC
         """,
