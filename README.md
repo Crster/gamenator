@@ -38,7 +38,7 @@ Follow these steps to set up the development environment.
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/gamenator.git
+git clone https://github.com/Crster/gamenator.git
 cd gamenator
 ```
 
